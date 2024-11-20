@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Facturier {% endblock %}
+
+{% block body %}
+<div>
+    <h2> Générer une facture </h2>
+    <table class="table">
+        <tr>
+            <th>Prenom</th>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td> MBEKO</td>
+            <td> Achile </td>
+            <td> Generer</td>
+        </tr>
+        {% for bill in bills %}
+        <tr>
+            <td>{{bill.firstName}}</td>
+            <td>{{bill.lastName}}</td>
+            <td><button class="btn btn-primary">Generer</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

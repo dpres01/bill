@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Facturier {% endblock %}
+
+{% block body %}
+<div>
+    <h2> Editer un profil </h2>
+    <div class="col-6">
+        {{form_start(form)}}
+        {{form_row(form.person)}}
+        {{form_row(form.amount)}}
+        {{form_row(form.chargesAmount)}}
+        {{form_row(form.total)}}
+    
+        <div class="row ms-5">
+            <button class="w-75 btn btn-outline-dark" type="submit"> Créer </button>
+        </div>
+        {{form_end(form)}}
+    </div>
+</div>
+{% endblock %}
