@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Billed;
 use App\Form\BilledType;
 use App\Repository\BilledRepository;
+use App\Service\Pdf;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +15,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class BillController extends AbstractController
 {
     #[Route('/bill/list', name: 'app_bill_list')]
-    public function index(BilledRepository $billRepo)
-    {
+    public function index(BilledRepository $billRepo, Pdf $pdf)
+    {   
+        dd($pdf->make($billRepo->findAll()));
         dd($billRepo->findAll());
     }
 

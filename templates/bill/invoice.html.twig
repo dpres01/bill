@@ -1,0 +1,76 @@
+<page backtop="7mm" backbottom="7mm" backleft="10mm" backright="10mm">
+    <page_header> </page_header>
+    <page_footer>
+        <div style="border-top: 2px solid #0e0363;text-align: right;">
+            <p><i>Facture édité automatiquement</i></p>
+        </div>
+    </page_footer>
+
+    <div>
+        <h2 style="text-align: center; color:#0e0363;"> QUITTANCE DE LOYER </h2>
+    </div>
+    <br/>
+    <br/>
+    <table style="border:none;">
+        <tr>
+            <td style="width: 455px; border:none;">
+                <span>BAILLEUR</span><br/><br/>
+                <span>Chirac MBALA NSILU</span><br/>
+                <span>16 bld de la malibran</span><br/>
+                <span>77680 Roissy en brie</span>
+            </td>
+            <td style="width: 205px; border: none;">
+                <span>LOCATAIRE</span><br/><br/>
+                <span>Ben MBOUSSA</span><br/>
+                <span>08 rue de marais</span><br/>
+                <span>95200 Sarcelles</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 450px; border: none; padding-top: 20px"></td>
+            <td style="width: 210px; border: none; padding-top: 20px; text-align: right;">
+                <span>Fait à Roissy en brie, le {{"now"|date('d/m/Y')}}</span>
+            </td>
+        </tr>
+    </table>
+    <br/><br/>
+    <div style="text-align: left; padding-left: 10px; border: 1px solid #0e0363; border-radius: 10px">
+        <p>Adresse de location:</p>    
+        <span>08 rue de marais</span><br/>
+        <span>95200 Sarcelles</span><br/><br/>
+    </div>
+    <br/><br/>
+    <p style="text-align:center; margin-bottom:5px;"> 
+        <i>Quittance de loyer pour la période de location du 01/11/2024 au 30/11/2024<br/> 
+        payé le 01/11/2024 par carte bancaire</i>
+    </p>
+    <br/>
+    <br/>
+    <p> 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+        sunt in culpa qui officia deserunt mollit anim id est laborum. 
+    </p>
+    <br/><br/>
+    <table  style="width: 100%; border: 1px solid #0e0363 !important;">
+        <tr style="background-color: #aec8fd; color: #0e0363">
+            <th style="height: 40px; text-align: left; padding-left:10px;">LIBELLE</th>
+            <th style="height: 40px; text-align: center; border-left: 1px solid #0e0363 !important;">MONTANT</th>
+        </tr>
+        {% for bill in bills %}
+        <tr>
+            <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;">Loyer hors charges</td>
+            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;">{{bill.amount}} €</td>
+        </tr>
+        <tr>
+            <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;">Provision des charges</td>
+            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;" >{{bill.amount}} €</td>
+        </tr>
+        <tr>
+            <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;">Total</td>
+            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;"><strong>{{bill.total}} €</strong></td>
+        </tr>
+        {% endfor %}
+    </table>
+</page>
