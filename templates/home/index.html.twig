@@ -20,9 +20,9 @@
         <tr>
             <td>{{bill.firstName}}</td>
             <td>{{bill.lastName}}</td>
-            <td><button class="btn btn-primary">Generer<button/></td>
+            <td><a href="{{path('app_panier_add',{'id':bill.id})}}"><button class="btn btn-primary">Générer</button></td>
         </tr>
         {% endfor %}
     </table>
-</div>
+</div>  
 {% endblock %}

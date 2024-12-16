@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Facturier {% endblock %}
+
+{% block body %}
+{{dump(app.session.get('panier'))}}
+<div>
+    <h2> Générer une facture </h2>
+    <table class="table">
+        <tr>
+            <th>Prenom</th>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td> MBEKO</td>
+            <td> Achile </td>
+            <td> Generer</td>
+        </tr>
+        {% for bill in bills %}
+        <tr>
+            <td>{{bill.firstName}}</td>
+            <td>{{bill.lastName}}</td>
+            <td><a href="{{path('app_panier_add',{'id':bill.id})}}"><button class="btn btn-primary">Add Panier<button/></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div id="modal" class="modal" tabindex="-1" style="display:none">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Panier</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Liste de produits</p>
+          <ul id="add-panier"></ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>  
+
+
+<script type="module">
+    import panier from './assets/js/panier.js';
+
+    let json = "{{app.session.get('panier')}}".replace(/&quot;/ig,'"');
+    let elem = document.getElementById("add-panier");
+    let modal = document.getElementById("modal");
+
+    console.log(panier(elem, json, modal));
+
+    /*if (json != '') {
+        let tableau = JSON.parse(json);
+    
+        for (var i = 0; i < tableau.length; i++) {
+            let li = document.createElement("li");
+            li.appendChild(document.createTextNode(tableau[i].firstName.concat(' ', tableau[i].lastName)));
+            elem.append(li);
+        }
+
+        if(tableau.length){
+            modal.setAttribute('style','display:block')
+        }
+    }*/
+</script>
+{% endblock %}

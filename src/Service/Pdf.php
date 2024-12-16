@@ -11,13 +11,14 @@ class Pdf
     {   
     }
 
-    public function make($bills)
-    {
+    public function make()
+    {    
         $dompdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(5, 10, 5, 10));
 
-        $dompdf->writeHtml($this->twig->render('bill/invoice.html.twig', ['bills'=>$bills]));
+        $dompdf->setTestIsImage(true);
+        //$dompdf->setFallbackImage('/public/images/signature.png');
+        $dompdf->writeHtml($this->twig->render('bill/invoice.html.twig', ['bill'=>0/*$bill*/]));
 
-        // (Optional) Setup the paper size and orientation
         $dompdf->output();
     }
 }

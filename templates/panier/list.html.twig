@@ -5,17 +5,20 @@
 {% block body %}
 <div>
     <h2> Générer une facture </h2>
+    {{dump(app.session.get('panier'), persons)}}
     <table class="table">
         <tr>
-            <th>Prenom.....</th>
+            <th>Prenom</th>
             <th>Nom</th>
             <th>Actions</th>
         </tr>
+        {% for person in persons %}
         <tr>
-            <td> Achile </td>
-            <td> MBEKO</td>
-            <td><button class="btn btn-primary" type="button">Generer</button></td>
+            <td> {{ person.firstName }} </td>
+            <td> {{ person.lastName }}</td>
+            <td> {{ person.occupant }}</td>
         </tr>
+        {% endfor %}
     </table>
 </div>
 {% endblock %}

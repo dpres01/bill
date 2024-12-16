@@ -17,7 +17,12 @@ class Billed
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Person $person = null;
+    private ?Person $renter = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Person $owner = null;
+
 
     #[ORM\Column]
     private ?float $amount = null;
@@ -121,15 +126,28 @@ class Billed
         return $this;
     }
 
-    public function getPerson(): ?Person
+    public function getRenter(): ?Person
     {
-        return $this->person;
+        return $this->renter;
     }
 
-    public function setPerson(?Person $person): self
+    public function setPerson(?Person $renter): self
     {
-        $this->person = $person;
+        $this->renter = $renter;
 
         return $this;
     }
+
+    public function getOwner(): ?Person
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?Person $owner): self
+    {
+        $this->renter = $owner;
+
+        return $this;
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Person;
 use App\Form\PersonType;
+use App\Repository\PersonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,19 +13,32 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PersonController extends AbstractController
 {
-    #[Route('/person/edit', name: 'app_occupant')]
-    public function edit(Request $request, EntityManagerInterface $em): Response
-    {
-        $form = $this->createForm(PersonType::class, new Person());
+    #[Route('/person/edit/{id?<d+>}', name: 'app_person_edit')]
+    public function edit(
+        Request $request,
+        ?Person $person,
+        EntityManagerInterface $em
+    ): Response {
+
+        if (!$person) {
+            $person = new Person();
+        }
+
+        $form = $this->createForm(PersonType::class, $person);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($form->getData());
+            $em->persist($person);
             $em->flush();
         }
 
         return $this->render('person/edit.html.twig', [
             'form' => $form,
         ]);
+    }
+    #[Route('/person/list', name: 'app_person_list')]
+    public function list(PersonRepository $personRepo)
+    {
+        dd($personRepo->findAll());
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,18 +15,30 @@ class PersonType extends AbstractType
     {
         $builder
         ->add('firstname', TextType::class, [
-            'label' => "Prénom"
+            'label' => 'Prénom',
+            'required' => true,
         ])
         ->add('lastname', TextType::class, [
-            'label' => "Nom"
+            'label' => 'Nom',
+            'required' => true,
         ])
         ->add('birthday', TextType::class, [
-            'label' => "Date de Naissance"
+            'label' => 'Date de Naissance',
+            'required' => true,
+        ])
+        ->add('fromDate', TextType::class,[
+            'label' => 'Date d\'entrée',
+            'required' => false,
         ])
         ->add('occupant', CheckboxType::class, [
-            'label' => "Locataire ?",
+            'label' => 'Locataire ?',
+            'required' => false,
         ])
         ;
+
+        $builder
+        ->get('fromDate')
+        ->addModelTransformer(new DateTimeToStringTransformer(format: 'd-m-Y'));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

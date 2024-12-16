@@ -35,4 +35,7 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'react' => [
+        'version' => '18.3.1',
+    ],
 ];

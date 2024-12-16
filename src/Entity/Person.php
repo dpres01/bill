@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PersonRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,10 +27,13 @@ class Person
     #[ORM\Column(length: 2, type:Types::BOOLEAN)]
     private ?bool $occupant = true;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fromDate = null;
 
-    private ?string $name = null;
+    public function __construct($id=null)
+    {
+        $this->id = $id;
+    }
 
     public function getId(): ?int
     {
@@ -41,7 +45,7 @@ class Person
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): static
+    public function setFirstName(?string $firstName): static
     {
         $this->firstName = $firstName;
 
@@ -53,7 +57,7 @@ class Person
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): static
+    public function setLastName(?string $lastName): static
     {
         $this->lastName = $lastName;
 
@@ -65,7 +69,7 @@ class Person
         return $this->birthday;
     }
 
-    public function setBirthday(string $birthday): static
+    public function setBirthday(?string $birthday): static
     {
         $this->birthday = $birthday;
 
@@ -77,7 +81,7 @@ class Person
         return $this->occupant;
     }
 
-    public function setOccupant(bool $occupant): ?self
+    public function setOccupant(?bool $occupant): ?self
     {
         $this->occupant = $occupant;
 
@@ -96,15 +100,8 @@ class Person
         return $this;
     }
 
-    public function getName()
-    {
-        $this->name = ucfirst($this->firstName).' '.strtoupper($this->lastName);
-
-        return $this->name;
-    }
-
     public function __toString()
     {
-        return $this->getName();
+        return ucfirst($this->firstName).' '.strtoupper($this->lastName);
     }
 }

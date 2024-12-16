@@ -21,16 +21,33 @@ class BilledType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('person',EntityType::class, [
+        ->add('owner', EntityType::class,[
+            'label' => "Bailleur",
+            'multiple' => false,
+            'class' => Person::class,
+            'query_builder' => function (EntityRepository $er): QueryBuilder {
+                return $er->createQueryBuilder('p')
+                    ->where('p.occupant = 0')
+                    ->orderBy('p.firstName', 'ASC')
+                    ->orderBy('p.lastName', 'ASC');
+            },
+            'choice_label' => function (Person $person): string{
+                return $person;
+            },
+        ])
+        ->add('renter',EntityType::class, [
             'label' => "Locataire",
             'multiple' => false,
             'class' => Person::class,
             'query_builder' => function (EntityRepository $er): QueryBuilder {
                 return $er->createQueryBuilder('p')
+                    ->where('p.occupant = 1')
                     ->orderBy('p.firstName', 'ASC')
                     ->orderBy('p.lastName', 'ASC');
             },
-            'choice_label' => 'name',
+            'choice_label' => function (Person $person): string{
+                return $person;
+            },
         ])
         ->add('amount', TextType::class, [
             'label' => 'Montant (€)',

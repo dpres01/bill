@@ -16,8 +16,8 @@ class BillController extends AbstractController
 {
     #[Route('/bill/list', name: 'app_bill_list')]
     public function index(BilledRepository $billRepo, Pdf $pdf)
-    {   
-        dd($pdf->make($billRepo->findAll()));
+    {   //echo phpinfo();die;
+        dd($pdf->make(/*$billRepo->findAll()*/));
         dd($billRepo->findAll());
     }
 

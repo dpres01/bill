@@ -7,6 +7,12 @@
  */
 import './styles/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
+import 'bootstrap'; 
+import './js/panier.js';
+import react from 'react';
 
-//console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+console.log(react);
+
+function test() {
+    
+}
