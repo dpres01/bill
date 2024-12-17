@@ -7,22 +7,26 @@
     <h2> Générer une facture </h2>
     <table class="table">
         <tr>
-            <th>Prenom</th>
-            <th>Nom</th>
-            <th>Actions</th>
+            <th> Locataire </th>
+            <th> Bailleur </th>
+            <th> Mois </th>
+            <th> Actions </th>
         </tr>
-        <tr>
-            <td> MBEKO</td>
-            <td> Achile </td>
-            <td> Generer</td>
-        </tr>
+
         {% for bill in bills %}
         <tr>
-            <td>{{bill.firstName}}</td>
-            <td>{{bill.lastName}}</td>
-            <td><a href="{{path('app_panier_add',{'id':bill.id})}}"><button class="btn btn-primary">Générer</button></td>
+            <td>{{bill.renter}}</td>
+            <td>{{bill.owner}}</td>
+            <td>{#{bill.owner}#}</td>
+            <td>
+                <a href="{{path('app_bill_generate')}}"><button class="btn btn-primary">Générer</button>
+            </td>
         </tr>
         {% endfor %}
+
+        {% if bills|length == 0 %}
+            <p class="text-center shadow-none p-3 mb-5 bg-light rounded">  -- no data --</p>
+        {% endif %}
     </table>
 </div>  
 {% endblock %}

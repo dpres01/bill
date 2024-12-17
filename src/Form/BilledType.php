@@ -23,6 +23,7 @@ class BilledType extends AbstractType
         $builder
         ->add('owner', EntityType::class,[
             'label' => "Bailleur",
+            'placeholder' => 'Veuillez selectionnez',
             'multiple' => false,
             'class' => Person::class,
             'query_builder' => function (EntityRepository $er): QueryBuilder {
@@ -37,6 +38,7 @@ class BilledType extends AbstractType
         ])
         ->add('renter',EntityType::class, [
             'label' => "Locataire",
+            'placeholder' => 'Veuillez selectionnez',
             'multiple' => false,
             'class' => Person::class,
             'query_builder' => function (EntityRepository $er): QueryBuilder {
@@ -55,11 +57,11 @@ class BilledType extends AbstractType
         ])
         ->add('chargesAmount', TextType::class, [
             'label' => "Charges (€)",
-            'attr' => ['placeholder' => '50'],
+            'attr' => ['placeholder' => '50', 'onkeyup' =>'sumMount()'],
         ])
         ->add('total', TextType::class, [
             'label' => "Total (€)",
-            'attr' => ['placeholder' => '150'],
+            'attr' => ['placeholder' => '150', 'readonly'=>'readonly'],
         ])
         ;
     }

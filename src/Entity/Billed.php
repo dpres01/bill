@@ -45,8 +45,10 @@ class Billed
     public function __construct()
     {
         $this->invoiceDate = new DateTime();
-        $this->startDate = new DateTime();
-        $this->endDate = new DateTime();
+        //TO DO a enlever à mettre dans generer avec une date inferieure au mois encours 
+        // Ajouter date de paiement
+        $this->startDate = new DateTime('first day of this month');
+        $this->endDate = new DateTime('last day of this month');
     }
 
     public function getId(): ?int
@@ -131,7 +133,7 @@ class Billed
         return $this->renter;
     }
 
-    public function setPerson(?Person $renter): self
+    public function setRenter(?Person $renter): self
     {
         $this->renter = $renter;
 
@@ -145,7 +147,7 @@ class Billed
 
     public function setOwner(?Person $owner): self
     {
-        $this->renter = $owner;
+        $this->owner = $owner;
 
         return $this;
     }

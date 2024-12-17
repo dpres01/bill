@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Person;
-use App\Repository\PersonRepository;
+use App\Repository\BilledRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,18 +13,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, PersonRepository $persoRepo): Response
+    public function index(Request $request, BilledRepository $billedRepo): Response
     {
-        //dd($persoRepo->findAll());
-        $session = $request->getSession();
-        //$session->clear();
-
         return $this->render('home/index.html.twig', [
-            'bills' => $persoRepo->findAll(),
+            'bills' => $billedRepo->findAll(),
         ]);
     }
 
-    #[Route('/add/{id}', name: 'app_panier_add')]
+    #[Route('/panier/add/{id}', name: 'app_panier_add')]
     public function addPanier(Request $request, Person $person, SerializerInterface $serializer)
     {
         $session = $request->getSession();

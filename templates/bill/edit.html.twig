@@ -24,4 +24,16 @@
         {{ form_end(form) }}
     </div>
 </div>
+
+<script type="text/javascript">
+
+function sumMount(){
+    $amount = document.getElementById("billed_amount").value; 
+    $charges = document.getElementById("billed_chargesAmount").value; 
+
+    if ($amount && $charges) {
+        document.getElementById("billed_total").value = parseInt($amount) + parseInt($charges); 
+    }
+}
+</script>
 {% endblock %}
