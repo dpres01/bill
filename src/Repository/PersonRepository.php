@@ -16,28 +16,24 @@ class PersonRepository extends ServiceEntityRepository
         parent::__construct($registry, Person::class);
     }
 
-    //    /**
-    //     * @return Occupant[] Returns an array of Occupant objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findOccupants(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id, p.firstName, p.lastName, p.birthday, p.occupant, p.fromDate')
+            ->where('p.occupant = 1')
+            ->orderBy('p.id','desc')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-    /*    public function findOccupants(): array
-        {
-            return $this->createQueryBuilder('p')
-               ->select('p.id, p.firstName, p.lastName, p.birthday')
-               ->where('p.occupant = 1')
-               ->getQuery()
-               ->getResult()
-           ;
-       }*/
+    public function findPersonByStatus(bool $occupant): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select("p.id, concat(concat(p.firstName,' '), p.lastName) name")
+            ->where('p.occupant=:occ')
+            ->setParameter('occ',$occupant)
+            ->getQuery()
+            ->getResult();
+    }
 }

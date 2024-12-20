@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -45,6 +46,7 @@ class PersonType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            'data_class' => Person::class,
         ]);
     }
 }

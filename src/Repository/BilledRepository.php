@@ -16,28 +16,15 @@ class BilledRepository extends ServiceEntityRepository
         parent::__construct($registry, Billed::class);
     }
 
-    //    /**
-    //     * @return Billed[] Returns an array of Billed objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('b.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Billed
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+   public function findBills(): array
+   {
+        return $this->createQueryBuilder('b')
+            ->select("b.id, concat(concat(o.firstName,' '), o.lastName) owner, concat(concat(r.firstName,' '), r.lastName) renter, b.amount, b.chargesAmount, b.total")
+            ->join('b.owner','o')
+            ->join('b.renter','r')
+            ->orderBy('b.id','desc')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

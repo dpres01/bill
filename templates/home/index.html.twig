@@ -17,9 +17,12 @@
         <tr>
             <td>{{bill.renter}}</td>
             <td>{{bill.owner}}</td>
-            <td>{#{bill.owner}#}</td>
+            <for>
+            <td> <input type="text" placeholder="choissisez un mois" onkeyup="makeBilled('{{ bill.id }}')"></td>
             <td>
-                <a href="{{path('app_bill_generate')}}"><button class="btn btn-primary">Générer</button>
+                <a id="bill-{{bill.id}}" href="{{path('app_bill_generate',{'id' : bill.id})}}">
+                    <button class="btn btn-primary" >Générer</button>
+                </a>
             </td>
         </tr>
         {% endfor %}
@@ -28,5 +31,16 @@
             <p class="text-center shadow-none p-3 mb-5 bg-light rounded">  -- no data --</p>
         {% endif %}
     </table>
-</div>  
+</div>
+
+<script type="text/javascript">
+    //makeBilled from '/assets/js/panier.js';
+
+    function makeBilled(id) {
+
+        console.log('ici');
+    }
+
+
+</script>  
 {% endblock %}

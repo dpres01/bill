@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Billed;
+use App\Entity\BilledMaker;
+use App\Form\BilledMakerType;
 use App\Form\BilledType;
 use App\Repository\BilledRepository;
 use App\Service\Pdf;
@@ -10,16 +12,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 class BillController extends AbstractController
 {
     #[Route('/bill/list', name: 'app_bill_list')]
-    public function index(BilledRepository $billRepo, Pdf $pdf)
+    public function index(BilledRepository $billRepo)
     {   
-        //dd(new DateTime('last day of this month'));
-        //dd($pdf->make($billRepo->find(1)));
-        dd($billRepo->findAll());
+        return $this->render('bill/list.html.twig', [
+            'bills' => $billRepo->findBills(),
+        ]);
     }
 
     #[Route('/bill/edit/{id?<d+>}', name: 'app_bill_edit')]
@@ -42,7 +45,9 @@ class BillController extends AbstractController
             $em->persist($billed);
             $em->flush();
 
-            if ($pdf->make($billed)) {
+            $billedMaker = (new BilledMaker())->setBilledRef($billed);
+
+            if ($pdf->make($billedMaker)) {
                 $this->addFlash('success', "La facture de mois encours créée avec succès");
 
                 return $this->render('bill/list.html.twig',[]);
@@ -56,18 +61,34 @@ class BillController extends AbstractController
         ]);
     }
 
-    #[Route('/bill/generate', name: 'app_bill_generate')]
-    public function generate()
-    {
-        dd('ici');
-
-        if ($pdf->make($billed)) {
-            $this->addFlash('success', "La facture de mois encours créée avec succès");
-
-            return $this->render('bill/list.html.twig',[]);
+    #[Route('/bill/generate/{id?<d+>}', name: 'app_bill_generate')]
+    public function generate(
+        Request $request,
+        Billed $billed,
+        Pdf $pdf
+    ) {
+        if (!$billed) {
+            throw new HttpException(404, 'Ref billed not found!');
         }
 
-        $this->addFlash('error', "Une erreur est survenue");
+        $billedMaker = (new BilledMaker())->setBilledRef($billed);
 
+        $form = $this->createForm(BilledMakerType::class, $billedMaker);
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($pdf->make($billedMaker)) {
+                $this->addFlash('success', "La facture de mois encours créée avec succès");
+
+                return $this->render('bill/list.html.twig',[]);
+            }
+
+            $this->addFlash('error', "Une erreur est survenue");
+        }
+
+        return $this->render('bill/maker.html.twig',[
+            'form' => $form,
+        ]);
     }
 }

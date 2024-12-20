@@ -19,4 +19,9 @@ function panier(elem, json) {
     //return 'error';
 }
 
+/*function makeBilled(id){
+    console.log(id);
+}*/
+
+//export  {makeBilled, panier};
 export default panier;

@@ -36,9 +36,21 @@ class PersonController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[Route('/person/list', name: 'app_person_list')]
     public function list(PersonRepository $personRepo)
     {
-        dd($personRepo->findAll());
+        return $this->render('person/list.html.twig', [
+            'persons' => $personRepo->findOccupants(),
+        ]);
     }
+
+    #[Route('/person/remove/{id}', name: 'app_person_remove')]
+    public function remove(Person $person)
+    {
+        dd($person);
+
+        return $this->redirect('app_person_list');
+    }
+
 }

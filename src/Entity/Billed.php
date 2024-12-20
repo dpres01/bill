@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\BilledRepository;
+use ArrayAccess;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,21 +37,22 @@ class Billed
     private ?float $chargesAmount = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $startDate = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $endDate = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $invoiceDate = null;
+    /**
+     * @var Collection<int, BuilledMaker>
+     */
+    #[ORM\OneToMany(targetEntity: BilledMaker::class, mappedBy: 'billedRef')]
+    private Collection $invoices;
 
     public function __construct()
     {
-        $this->invoiceDate = new DateTime();
-        //TO DO a enlever à mettre dans generer avec une date inferieure au mois encours 
-        // Ajouter date de paiement
-        $this->startDate = new DateTime('first day of this month');
-        $this->endDate = new DateTime('last day of this month');
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+        $this->invoices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,9 +67,9 @@ class Billed
 
     public function setAmount(float $amount): static
     {
-        $this->amount = $amount;
-
+        
         return $this;
+        $this->amount = $amount;
     }
 
     public function getTotal(): ?float
@@ -92,38 +96,26 @@ class Billed
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->startDate;
+        return $this->createdAt;
     }
 
-    public function setStartDate(\DateTimeInterface $startDate): static
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
-        $this->startDate = $startDate;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->endDate;
+        return $this->updatedAt;
     }
 
-    public function setEndDate(\DateTimeInterface $endDate): static
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    public function getInvoiceDate(): ?\DateTimeInterface
-    {
-        return $this->invoiceDate;
-    }
-
-    public function setInvoiceDate(\DateTimeInterface $invoiceDate): static
-    {
-        $this->invoiceDate = $invoiceDate;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -148,6 +140,36 @@ class Billed
     public function setOwner(?Person $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BuilledMaker>
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoices(BilledMaker $invoices): static
+    {
+        if (!$this->invoices->contains($invoices)) {
+            $this->invoices->add($invoices);
+            $invoices->setBilledRef($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoices(BilledMaker $invoices): static
+    {
+        if ($this->invoices->removeElement($invoices)) {
+            // set the owning side to null (unless already changed)
+            if ($invoices->getBilledRef() === $this) {
+                $invoices->setBilledRef(null);
+            }
+        }
 
         return $this;
     }

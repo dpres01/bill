@@ -22,7 +22,7 @@
             <td style="width: 150px; border: none;"></td>
             <td style="width: 205px; border: none;">
                 <span>LOCATAIRE</span><br/><br/>
-                <span>{{ bill.renter }}</span><br/>
+                <span>{{ billed_maker.billedRef.renter }}</span><br/>
                 <span>08 rue de marais</span><br/>
                 <span>95200 Sarcelles</span>
             </td>
@@ -32,7 +32,7 @@
     <div style=" border: none; padding-top: 20px; text-align: right;">
         <!--td style="width: 200px; border: none; padding-top: 20px"></td-->
         
-            <p>Fait à Roissy en brie, le {{"now"|date('d/m/Y')}}</p>
+            <p>Fait à Roissy en brie, le {{ billed_maker.billedDate|date('d/m/Y') }}</p>
         
     </div>
     <br/>
@@ -45,8 +45,8 @@
     </div>
     <br/><br/>
     <p style="text-align:center; margin-bottom:5px;"> 
-        <i>Quittance de loyer pour la période de location du {{startDate}} au {{endDate}}<br/> 
-        payé le 01/11/2024 par virement bancaire</i>
+        <i>Quittance de loyer pour la période de location du {{ billed_maker.startDate|date('d/m/Y') }} au {{ billed_maker.endDate|date('d/m/Y') }}<br/> 
+        payé le {{ billed_maker.paymentAt|date('d/m/Y i:s') }} par virement bancaire</i>
     </p>
     <br/>
     <br/>
@@ -57,15 +57,15 @@
         </tr>
         <tr>
             <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;">Loyer hors charges</td>
-            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;">{{ bill.amount }} €</td>
+            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;">{{ billed_maker.billedRef.amount }} €</td>
         </tr>
         <tr>
             <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;">Provision des charges</td>
-            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;">{{ bill.chargesAmount }} €</td>
+            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;">{{ billed_maker.billedRef.chargesAmount }} €</td>
         </tr>
         <tr>
             <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;">Total</td>
-            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;"><strong>{{ bill.total }} €</strong></td>
+            <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;"><strong>{{ billed_maker.billedRef.total }} €</strong></td>
         </tr>
         
     </table>

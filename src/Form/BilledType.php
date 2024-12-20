@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Billed;
 use App\Entity\Person;
 use App\Repository\PersonRepository;
 use Doctrine\ORM\EntityRepository;
@@ -69,7 +70,7 @@ class BilledType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class'=>Billed::class,
         ]);
     }
 }

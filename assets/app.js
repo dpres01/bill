@@ -11,8 +11,4 @@ import 'bootstrap';
 import './js/panier.js';
 import react from 'react';
 
-console.log(react);
-
-function test() {
-    
-}
+//console.log(react);

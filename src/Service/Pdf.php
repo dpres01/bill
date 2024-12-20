@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
-use App\Entity\Billed;
+use App\Entity\BilledMaker;
 use DateTime;
 use Exception;
 use Spipu\Html2Pdf\Html2Pdf;
@@ -14,24 +16,24 @@ class Pdf
     {   
     }
 
-    public function make(Billed $billed)
+    public function make(BilledMaker $billedMaker)
     {   
         $return = true;
         
         try{
-            $dompdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(5, 10, 5, 10));
+            $htmlToPdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(5, 10, 5, 10));
 
             //$dompdf->setTestIsImage(true);
             //$dompdf->addFont('thin', '', $this->projectDir.'/assets/fonts/Inter.ttf');
-            $dompdf->setDefaultFont('courier');
             //$dompdf->setFallbackImage('/public/images/signature.png');
-            $dompdf->writeHtml($this->twig->render('bill/invoice.html.twig', [
-                'bill' => $billed,
+            $htmlToPdf->setDefaultFont('courier');
+            $htmlToPdf->writeHtml($this->twig->render('bill/invoice.html.twig', [
+                'billed_maker' => $billedMaker,
                 'startDate' => (new DateTime('first day of this month'))->format('d/m/Y'),
                 'endDate' => (new DateTime('last day of this month'))->format('d/m/Y'),
             ]));
-
-            $dompdf->output($billed->getRenter().'.pdf', 'D');
+//dd($htmlToPdf);
+            $htmlToPdf->output($billedMaker->getBilledRef()->getRenter().'.pdf');
         } catch ( Exception $e) {
             $return = false;
         }
