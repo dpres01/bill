@@ -2,7 +2,7 @@
     <page_header> </page_header>
     <page_footer >
         <div style="border-top: 2px solid #0e0363;text-align: right;">
-            <p class="text-desc"><i>Facture éditée automatiquement</i></p>
+            <p class="text-desc"><i>Généré automatiquement</i></p>
         </div>
     </page_footer>
 
@@ -45,8 +45,8 @@
     </div>
     <br/><br/>
     <p style="text-align:center; margin-bottom:5px;"> 
-        <i>Quittance de loyer pour la période de location du {{ billed_maker.startDate|date('d/m/Y') }} au {{ billed_maker.endDate|date('d/m/Y') }}<br/> 
-        payé le {{ billed_maker.paymentAt|date('d/m/Y i:s') }} par virement bancaire</i>
+        <i>Quittance de loyer pour la période de location du {{ billed_maker.startAtPeriod|date('d/m/Y') }} au {{ billed_maker.endAtPeriod|date('d/m/Y') }}<br/> 
+        payé le {{ billed_maker.paymentAt|date('d/m/Y') }} par virement bancaire</i>
     </p>
     <br/>
     <br/>
@@ -64,7 +64,7 @@
             <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;">{{ billed_maker.billedRef.chargesAmount }} €</td>
         </tr>
         <tr>
-            <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;">Total</td>
+            <td style="width: 400px; height: 40px; border-top: 1px solid #0e0363 !important; text-align: left; padding-left:10px;"><strong>Total</strong></td>
             <td style="width: 240px; height: 40px; border-left: 1px solid #0e0363 !important; border-top: 1px solid #0e0363 !important; text-align: center;"><strong>{{ billed_maker.billedRef.total }} €</strong></td>
         </tr>
         

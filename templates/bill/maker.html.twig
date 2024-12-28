@@ -5,6 +5,13 @@
 {% block body %}
 <div>
     <h2> Création de la facture de XXX </h2>
+
+    <div>
+        {% for type, message in app.flashes %}
+            <div class="alert alert-{{ type }}"> {{ message[0] }}</div>
+        {% endfor %}
+    </div>
+
     <div class="col-6">
         {{ form_start(form) }}
             {{ form_row(form.startAtPeriod) }}

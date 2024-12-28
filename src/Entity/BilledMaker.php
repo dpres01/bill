@@ -35,7 +35,7 @@ class BilledMaker
     {
         $this->startAtPeriod = new DateTimeImmutable('first day of this month');
         $this->endAtPeriod = new DateTimeImmutable('last day of this month');
-        $this->paymentAt = new DateTimeImmutable();
+        $this->paymentAt = $this->startAtPeriod->modify('+4 days');// new DateTimeImmutable('five day of this month');
         $this->billedDate = new DateTimeImmutable();
     }
 

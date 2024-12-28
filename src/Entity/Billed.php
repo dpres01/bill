@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\BilledRepository;
-use ArrayAccess;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -67,9 +66,9 @@ class Billed
 
     public function setAmount(float $amount): static
     {
+        $this->amount = $amount;
         
         return $this;
-        $this->amount = $amount;
     }
 
     public function getTotal(): ?float

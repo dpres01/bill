@@ -9,6 +9,11 @@ import './styles/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap'; 
 import './js/panier.js';
-import react from 'react';
+
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr';
+import 'flatpickr/dist/l10n/fr.js'
+
+//import react from 'react';
 
 //console.log(react);
