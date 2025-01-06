@@ -13,9 +13,6 @@ use Twig\Environment;
 
 class Pdf
 {
-    public const FIRST_DAY ='first day of this month';
-    public const LAST_DAY ='last day of this month';
-
     public function __construct(private Environment $twig, private string $projectDir)
     {   
     }
@@ -29,7 +26,8 @@ class Pdf
 
             //$dompdf->setTestIsImage(true);
             //$htmlToPdf->addFont('thin', 'regular', $this->projectDir.'/assets/fonts/roboto-light.ttf');
-            $htmlToPdf->setDefaultFont('courier');
+            //$htmlToPdf->setDefaultFont('dejavusansmono');
+            $htmlToPdf->setDefaultFont('pdfacourier');
 
             $htmlToPdf->writeHtml($this->twig->render('bill/invoice.html.twig', [
                 'billed_maker' => $billedMaker,
@@ -46,9 +44,12 @@ class Pdf
     public function formatted(Billed $billed, DateTimeImmutable $date): bool
     {   
         $billedMaker = new BilledMaker();
+        $startDate = $date->modify(BilledMaker::FIRST_DAY);
+
         $billedMaker->setBilledRef($billed)
-            ->setEndAtPeriod($date->modify(static::LAST_DAY))
-            ->setStartAtPeriod($date->modify(static::FIRST_DAY));
+            ->setPaymentAt($startDate->modify(BilledMaker::PAYMENT_AT))
+            ->setEndAtPeriod($date->modify(BilledMaker::LAST_DAY))
+            ->setStartAtPeriod($startDate);
 
         return $this->make($billedMaker);
     }

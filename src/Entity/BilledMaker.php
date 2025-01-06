@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: BilledMakerRepository::class)]
 class BilledMaker
 {
+    public const FIRST_DAY = 'first day of this month';
+    public const LAST_DAY = 'last day of this month';
+    public const PAYMENT_AT = '+4 days';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,9 +37,9 @@ class BilledMaker
 
     public function __construct()
     {
-        $this->startAtPeriod = new DateTimeImmutable('first day of this month');
-        $this->endAtPeriod = new DateTimeImmutable('last day of this month');
-        $this->paymentAt = $this->startAtPeriod->modify('+4 days');// new DateTimeImmutable('five day of this month');
+        $this->startAtPeriod = new DateTimeImmutable(self::FIRST_DAY);
+        $this->endAtPeriod = new DateTimeImmutable(self::LAST_DAY);
+        $this->paymentAt = $this->startAtPeriod->modify(self::PAYMENT_AT);// new DateTimeImmutable('five day of this month');
         $this->billedDate = new DateTimeImmutable();
     }
 
